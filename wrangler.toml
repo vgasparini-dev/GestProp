@@ -1,0 +1,24 @@
+name = "gestprop-api"
+main = "src/index.js"
+compatibility_date = "2025-10-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Banco de dados relacional (criar com: wrangler d1 create gestprop-db)
+[[d1_databases]]
+binding = "DB"
+database_name = "gestprop-db"
+database_id = "COLOCAR_DATABASE_ID"
+
+# Fotos de cocho (criar com: wrangler r2 bucket create gestprop-cocho)
+[[r2_buckets]]
+binding = "COCHO_BUCKET"
+bucket_name = "gestprop-cocho"
+
+[vars]
+DEEPSEEK_MODEL = "deepseek-v4-pro"         # modelo padrão; fallback automático p/ deepseek-v4-flash
+DEEPSEEK_BASE_URL = "https://api.deepseek.com"
+ALLOWED_ORIGIN = "*"                       # restringir ao domínio do front em produção
+
+# Segredos (não commitar — definir com wrangler secret):
+#   wrangler secret put DEEPSEEK_API_KEY   # chave da API DeepSeek (https://platform.deepseek.com)
+#   wrangler secret put AUTH_SECRET        # segredo HMAC p/ tokens de sessão — OBRIGATÓRIO (rotas autenticadas falham com 500 sem ele)
